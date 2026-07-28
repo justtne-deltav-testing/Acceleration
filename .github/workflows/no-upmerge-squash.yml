@@ -3,11 +3,14 @@ name: Prevent upmerges from being squash merged
 on:
   merge_group:
     types: [checks_requested]
+  # Necessary, otherwise PRs will have a "pending" check that will never resolve
+  pull_request:
 
 jobs:
   check-upmerge:
     name: Check for PRs with upmerge in the title
     runs-on: ubuntu-latest
+    if: github.event_name == 'merge_group'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7

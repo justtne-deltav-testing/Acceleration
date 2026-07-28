@@ -5,9 +5,11 @@ on:
     types: [checks_requested]
 
 jobs:
-  check-upmerge:
-    name: Check for PRs with upmerge in the title
+  no-upmerge-squash:
+    name: Prevent upmerges from being squash merged
     runs-on: ubuntu-latest
+    # Makes sure this check just gets cancelled while in a PR
+    if: github.event_name == 'merge_group'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
